@@ -5,20 +5,32 @@ var otherCitiesE1 = document.querySelector("#active-cities");
 var currentTempE1 = document.querySelector("#current-card-text");
 var inputForm = document.querySelector("#search-form");
 
+// create local storage for cities list if none exist already
+var list = JSON.parse(localStorage.getItem('cities')) || [];
+
 // get and store the search input value
-var formSubmit = function(event) {
-    // event.preventDefault();
+$('#search-input').on('submit', function(event) {
+    
+    // var formSubmit = function(event) {
+    // // event.preventDefault();
 
-    var city = cityInputE1.value.trim();
+    var city = $('cityInputE1')
+    .value()
+    .trim();
+    $('#current-search').val('');
+    for (var i = 0; i < list.length; i++) {
+        var cityItem = $('<p>');
+        cityItem.text(list[i]);
 
-    currentCitySearch.innerHTML = "";
-    currentCitySearch.innerHTML = city;
+    // currentCitySearch.innerHTML = city;
     console.log(city);
+    
+    localStorage.setItem('cities', JSON.stringify(list));
 
     getWeather(currentCitySearch);
-};
+});
 
-btn.addEventListener("submit", formSubmit());
+// btn.addEventListener("submit", formSubmit());
 
 // fetch the weather API
 function getWeather (cityInputE1) {
@@ -61,4 +73,15 @@ var displayWeather = function(city, country, list){
     //     // variables for 5 day information (loop)
     //     // display 5 day forecast in the bottom section
     //     // keep the toggle option available for user if they want to select another city they searched before
+    
+    function renderCities(list) {
+            for (var i = 0; i < list.length; i++) {
+                // Sets the `list` item's value as text of this <p> element
+                var citiesList = $('<p>');
+                citiesList.text(list[i]);
+
+                localStorage.setItem('cities', JSON.stringify(list));
+
 }
+}
+}  
